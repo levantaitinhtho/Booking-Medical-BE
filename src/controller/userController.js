@@ -22,6 +22,7 @@ let handleLogin = async (req, res) =>{
 
 let handleGetAllUsers = async (req, res) =>{
     let id = req.query.id;
+    
     if(!id){
         return res.status(200).json({
             errCode: 1,
@@ -39,7 +40,6 @@ let handleGetAllUsers = async (req, res) =>{
 }
 let handleCreateNewUser = async (req,res) =>{
     let message = await userService.createNewUser(req.body);
-   
     return res.status(200).json(message);
 }
 
