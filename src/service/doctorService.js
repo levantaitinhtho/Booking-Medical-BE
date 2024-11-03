@@ -54,7 +54,7 @@ let getAllDoctors = () => {
 let checkRequiredFields = (inputData) =>{
     let arrFields = ['doctorId','contentHTML','contentMarkdown','action',
         'selectedPrice','selectedPayment','selectedProvince','nameClinic','addressClinic',
-        'note','specialtyId'
+        'note','specialtyId','clinicId'
     ]
     let isValid = true;
     let element ='';
@@ -80,6 +80,7 @@ let saveDetailInforDoctor = (inputData) => {
                     errMessage: `Misssing Required Parameters: ${checkObj.element}  !!`
                 });
             } else {
+                
                 if (inputData.action === 'CREATE') {
                     await db.Markdown.create({
                         contentHTML: inputData.contentHTML,
@@ -111,22 +112,27 @@ let saveDetailInforDoctor = (inputData) => {
                     //update
                     doctorInfor.doctorId = inputData.doctorId;
                     doctorInfor.priceId = inputData.selectedPrice;
-                    doctorInfor.provinceId = inputData.selectProvince;
+                    doctorInfor.provinceId = inputData.selectedProvince;
                     doctorInfor.paymentId = inputData.selectedPayment;
                     doctorInfor.nameClinic = inputData.nameClinic;
                     doctorInfor.addressClinic = inputData.addressClinic;
                     doctorInfor.note = inputData.note;
+                    doctorInfor.specialtyId = inputData.specialtyId;
+                    doctorInfor.clinicId = inputData.clinicId
                     await doctorInfor.save()
                 }else{
                     //create
                     await db.Doctor_Infor.create({
                     doctorId :inputData.doctorId,
                     priceId :inputData.selectedPrice,
-                    provinceId :inputData.selectProvince,
+                    provinceId :inputData.selectedProvince,
                     paymentId :inputData.selectedPayment,
                     nameClinic :inputData.nameClinic,
                     addressClinic :inputData.addressClinic,
                     note :inputData.note,
+                    specialtyId: inputData.specialtyId,
+                    clinicId: inputData.clinicId,
+                    
                     })
                 }
                 resolve({
