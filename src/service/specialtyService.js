@@ -98,8 +98,100 @@ let getDetailSpecialtyById = (inputId, location)=>{
         }
     })
 }
+let getAllSpecialtys = () =>{
+    return new Promise(async(resolve, reject) =>{
+        try{
+            let data = await db.Specialty.findAll({
+
+            })
+            if(data && data.length > 0){
+                data.map(item =>{
+                    item.image = new Buffer(item.image,'base64').toString('binary')
+                    return item;
+                })
+            }
+            resolve({
+                errMessage:'oke',
+                errCode:0,
+                data: data
+
+            })
+        }catch(e){
+            reject(e)
+        }
+        
+    })
+}
+let updateSpecialtyData = (data) =>{
+    return new Promise( async (resolve, reject) =>{
+        try{
+            if(!data.id || !data.name){
+                resolve({
+                    errCode: 2,
+                    errMessage: 'Missing required parameters'
+                })
+            }
+            let specialty = await db.Specialty.findOne({
+                where: { id: data.id },
+                raw:false
+            })
+            if (specialty) {
+                specialty.name = data.name
+                if(data.avatar){
+                    user.image = data.avatar;
+                }
+
+                await specialty.save();
+
+                resolve({
+                    errCode : 0,
+                    message : ' Update Specialty Successfully !!'
+                })
+            } else {
+                resolve({
+                    errCode: 1,
+                    errMessage:'Specialty Not Found !!!'
+                });
+            }
+        }catch(e){
+            reject(e)
+        }
+    })
+}
+let deleteSpecialty = (specialtyId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Kiểm tra xem phòng khám có tồn tại không
+            let foundSpecialty = await db.Specialty.findOne({
+                where: { id: specialtyId }
+            });
+
+            if (!foundSpecialty) {
+                resolve({
+                    errCode: 2,
+                    errMessage: `Specialty doesn't exist`
+                });
+            } else {
+                // Xóa phòng khám
+                await db.Specialty.destroy({
+                    where: { id: specialtyId }
+                });
+
+                resolve({
+                    errCode: 0,
+                    errMessage: `Specialty deleted successfully`
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports={
     createSpecialty: createSpecialty,
     getAllSpecialty: getAllSpecialty,
     getDetailSpecialtyById: getDetailSpecialtyById,
+    getAllSpecialtys: getAllSpecialtys,
+    updateSpecialtyData: updateSpecialtyData,
+    deleteSpecialty: deleteSpecialty
 }
