@@ -33,6 +33,7 @@ let postBookAppointment = (data) =>{
                     defaults:{
                         email:data.email,
                         roleId:'R3',
+                        password:null,
                         gender: data.selectedGender,
                         address:data.address,
                         firstName: data.fullName

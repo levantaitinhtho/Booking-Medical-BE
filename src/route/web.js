@@ -5,6 +5,7 @@ import doctorController from "../controller/doctorController"
 import patientController from '../controller/patientController'
 import specialtyController from '../controller/specialtyController'
 import clinicController from '../controller/clinicController'
+import GeminiController from '../controller/GeminiController';
 let router = express.Router();
 let initWebRoutes = (app) =>{
     router.get('/' , homeController.getHomePage);
@@ -55,6 +56,8 @@ let initWebRoutes = (app) =>{
     router.put('/api/edit-clinic',clinicController.handleEditClinic);
     router.delete('/api/delete-clinic',clinicController.handleDeleteClinic);
     router.get('/api/get-all-clinics',clinicController.handleGetAllClinics);
+    router.post('/api/chat', GeminiController.sendMessageToGemini); 
+
     return app.use("/",router)
 }
 module.exports = initWebRoutes;
