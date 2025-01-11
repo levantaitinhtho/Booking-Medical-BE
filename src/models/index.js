@@ -1,4 +1,5 @@
 'use strict';
+const config = require('../config/config'); 
 require('dotenv').config()
 const fs = require('fs');
 const path = require('path');
