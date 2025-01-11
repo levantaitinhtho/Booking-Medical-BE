@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,  // Host (Aiven connection string)
     port: process.env.DB_PORT,  // Port
-    dialect: process.env.DB_DIALECT, // Database type (mysql)
+    dialect: 'postgres',        // Change dialect to PostgreSQL
     dialectOptions: {
       ssl: {
         require: process.env.DB_SSL === 'true', // Use SSL if enabled
