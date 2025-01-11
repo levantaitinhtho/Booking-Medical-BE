@@ -1,5 +1,5 @@
-import config from "../config/config.js";
-require("dotenv").config(); // Đảm bảo rằng file .env được load
+require("dotenv").config();  // Đảm bảo rằng file .env được load
+
 module.exports = {
   development: {
     username: process.env.DB_USERNAME,
